@@ -1,0 +1,25 @@
+{
+  "name": "evolux.fluent",
+  "version": "1.0.0",
+  "description": "easy build fluent APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thoregon/evolux.fluent.git"
+  },
+  "keywords": [],
+  "author": "Bernhard Lukassen <bl@bernhard-lukassen.com> (http://www.bernhard-lukassen.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thoregon/evolux.fluent/issues"
+  },
+  "homepage": "https://github.com/Thoregon/evolux.fluent#readme",
+  "devDependencies": {
+    "esdoc": "^1.1.0",
+    "esdoc-node": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0"
+  }
+}
