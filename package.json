@@ -2,7 +2,8 @@
   "name": "evolux.fluent",
   "version": "1.0.0",
   "description": "easy build fluent APIs",
-  "main": "index.js",
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
