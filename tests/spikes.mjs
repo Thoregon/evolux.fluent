@@ -6,37 +6,48 @@ import Fluent       from "../lib/fluent.mjs";
  * @author: blukassen
  */
 
-let spec;
+let builder;
 let obj;
 
-let fluent = new Fluent();
+let fluent = new Fluent({ description: 'Fluent query builder' });
 
 /*
  * simple function answering input param with "!" appended
  */
-spec = fluent.begin('select', 'what')
-                .begin('where', 'clause')
-                    .optional()
-                    .oneMandatory()
-                    .add('is', 'value').optional()
-                    .add('isNot', 'value')
-                    .add('startsWith', 'value')
-                .end()
-                .begin('and').repeat('where')
-                .begin('or').repeat('where')
-                .end()
-                .add('observe').optional()
-                .add('then').optional();
 
 fluent
-    .rule('select').param('what').def.ref('where').optional.end
-    .rule('where').param('param').def
-        .block
-            .atLeastOne
-            .ref('is').param('value').optional
-            .ref('isNot').param('value').optional
-            .ref('startsWith').param('value').optional
-        .end
-    .end;
+    .rule('query').sym('select').par('what').ref('where').optional.ref('build')
+    .rule('where').sym('where').ref('whereCondition')
+    .rule('whereCondtion')
+        .ref('expression')
+        .or.sym('not').ref('expression')
+        .or.ref('expression').sym('or').ref('expression')
+        .or.ref('expression').sym('and').ref('expression')
+    .rule('expression')
+        .par('qualifier').sym('is').val
+        .or.par('qualifier').sym('isNot').val
+        .or.par('qualifier').sym('startsWith').val
+        .or.par('qualifier').sym('startsNotWith').val
+        .or.par('qualifier').sym('contains').val
+        .or.par('qualifier').sym('containsNot').val
+        .or.par('qualifier').sym('isLess').val
+        .or.par('qualifier').sym('isLessOrEqual').val
+        .or.par('qualifier').sym('is').val
+        .or.par('qualifier').sym('is').val
+        .or.par('qualifier').sym('is').val
+    .rule('build').sym('observe').or.sym('then');
 
-spec = fluent.build();
+builder = fluent.build();
+console.log(builder);
+
+let query = builder.select('order').where('address').is(1234);
+
+/*
+fluent = new Fluent({ description: 'Fluent component installer' });
+
+fluent
+    .rule('');
+
+builder = fluent.build();
+*/
+
