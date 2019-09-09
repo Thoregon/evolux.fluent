@@ -9,38 +9,41 @@ import Fluent       from "../lib/fluent.mjs";
 let builder;
 let obj;
 
-let fluent = new Fluent({ description: 'Fluent query builder' });
+let fluent = new Fluent({ name: 'QueryBuilder', description: 'Fluent query builder' });
 
 /*
  * simple function answering input param with "!" appended
  */
 
 fluent
-    .rule('query').sym('select').par('what').ref('where').optional.ref('build')
-    .rule('where').sym('where').ref('whereCondition')
-    .rule('whereCondtion')
+    .rule('query').sym('select', 'what').ref('where').optional.ref('build')
+    .rule('where').sym('where', 'qualifier').ref('whereCondition')
+    .rule('whereCondition')
         .ref('expression')
-        .or.sym('not').ref('expression')
-        .or.ref('expression').sym('or').ref('expression')
-        .or.ref('expression').sym('and').ref('expression')
+        .or.ref('expression').sym('or').ref('whereCondition')
+        .or.ref('expression').sym('and').ref('whereCondition')
     .rule('expression')
-        .par('qualifier').sym('is').val
-        .or.par('qualifier').sym('isNot').val
-        .or.par('qualifier').sym('startsWith').val
-        .or.par('qualifier').sym('startsNotWith').val
-        .or.par('qualifier').sym('contains').val
-        .or.par('qualifier').sym('containsNot').val
-        .or.par('qualifier').sym('isLess').val
-        .or.par('qualifier').sym('isLessOrEqual').val
-        .or.par('qualifier').sym('is').val
-        .or.par('qualifier').sym('is').val
-        .or.par('qualifier').sym('is').val
-    .rule('build').sym('observe').or.sym('then');
+        .sym('is', 'val')
+        .or.sym('isNot', 'val')
+        .or.sym('startsWith', 'val')
+        .or.sym('startsNotWith', 'val')
+        .or.sym('contains', 'val')
+        .or.sym('containsNot', 'val')
+        .or.sym('isLess', 'val')
+        .or.sym('isLessOrEqual', 'val')
+        .or.sym('in', 'val')
+        .or.sym('notIn', 'val')
+        .or.sym('between', 'valbegin', 'valend')
+    .rule('build').sym('then');
 
 builder = fluent.build();
 console.log(builder);
 
 let query = builder.select('order').where('address').is(1234);
+
+query = builder.select('address').where('status').isNot('x').and('zip').between(1000).and(1999);
+
+query.then(observable => console.log(observable));
 
 /*
 fluent = new Fluent({ description: 'Fluent component installer' });
