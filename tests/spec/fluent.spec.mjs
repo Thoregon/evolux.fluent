@@ -19,7 +19,7 @@ describe('evolux.fluent', () => {
     it('should create a nested API', () => {
         let spec = {
             'select' : {
-                '*',
+                '*' : '*',
                 'where' : {}
             },
             'then' : () => {},
@@ -44,6 +44,6 @@ describe('evolux.fluent', () => {
             }
         }
 
-        let spec =
+        let spec = "";
     })
 });
