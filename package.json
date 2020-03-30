@@ -19,8 +19,5 @@
   },
   "homepage": "https://github.com/Thoregon/evolux.fluent#readme",
   "devDependencies": {
-    "esdoc": "^1.1.0",
-    "esdoc-node": "^1.0.4",
-    "esdoc-standard-plugin": "^1.0.0"
   }
 }
